@@ -1,8 +1,8 @@
 GET http://localhost:3001/api/records
 ###
-GET http://localhost:3001/api/records/2
+GET http://localhost:3001/api/records/6492e164f6a3e215dc2a9506
 ###
-DELETE http://localhost:3001/api/records/3
+DELETE http://localhost:3001/api/records/6492e9846506fa2a45b9245a
 ###
 POST http://localhost:3001/api/records
 content-type: application/json
@@ -13,4 +13,15 @@ content-type: application/json
     "actividad": "actividad1",
     "descripcion": "descripcion1",
     "responsable": "responsable1"
+}
+###
+PUT http://localhost:3001/api/records/6493078f22b581ed118472cf
+content-type: application/json
+
+{
+    "fecha": "13/03/2013",
+    "duracion": 13,
+    "actividad": "a13",
+    "descripcion": "d13",
+    "responsable": "r13"
 }
