@@ -1,0 +1,16 @@
+GET http://localhost:3001/api/records
+###
+GET http://localhost:3001/api/records/2
+###
+DELETE http://localhost:3001/api/records/3
+###
+POST http://localhost:3001/api/records
+content-type: application/json
+
+{
+    "fecha": "21/01/2001",
+    "duracion": 100,
+    "actividad": "actividad1",
+    "descripcion": "descripcion1",
+    "responsable": "responsable1"
+}
