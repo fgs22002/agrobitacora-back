@@ -33,6 +33,10 @@ let records = [
     },
 ]
 
+app.get('/', (request, response) => {
+    response.send('<h1>Hello World!</h1>')
+})
+
 app.get('/info', (request, response) => {
     const text = "<p>Agrobitacora has info for " + records.length + " records</p>" + "<p>"+ new Date() + "</p>"
 
@@ -91,6 +95,11 @@ app.post('/api/records', (request, response) => {
   
     response.json(record)
 })
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
