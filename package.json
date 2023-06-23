@@ -10,7 +10,8 @@
     "build:ui": "@powershell Remove-Item -Recurse -Force build && cd ../agrobitacora-front && npm run build && @powershell Copy-Item build -Recurse ../agrobitacora-back/",
     "deploy": "git push",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
-    "logs:prod": "railway logs"
+    "logs:prod": "railway logs",
+    "lint": "eslint ."
   },
   "author": "Francisco Garcia Sanchez",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.43.0",
     "nodemon": "^2.0.22"
   }
 }

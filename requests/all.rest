@@ -9,6 +9,7 @@ content-type: application/json
 
 {
     "fecha": "21/01/2001",
+    
     "duracion": 100,
     "actividad": "actividad1",
     "descripcion": "descripcion1",
