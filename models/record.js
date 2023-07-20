@@ -20,6 +20,10 @@ const recordSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
@@ -32,4 +36,6 @@ recordSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Record', recordSchema)
+const Record = mongoose.model('Record', recordSchema)
+
+module.exports = Record

@@ -51,7 +51,7 @@ recordsRouter.delete('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-recordsRouter.post('/', (request, response) => {
+recordsRouter.post('/', (request, response, next) => {
   const body = request.body
 
   if (!body.fecha || !body.actividad || !body.descripcion || !body.responsable) {

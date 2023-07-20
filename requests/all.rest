@@ -1,22 +1,21 @@
-GET http://localhost:3001/api/records
+GET http://localhost:3000/api/records
 ###
-GET http://localhost:3001/api/records/6492e164f6a3e215dc2a9506
+GET http://localhost:3000/api/records/6492e164f6a3e215dc2a9506
 ###
-DELETE http://localhost:3001/api/records/6492e9846506fa2a45b9245a
+DELETE http://localhost:3000/api/records/6492e9846506fa2a45b9245a
 ###
-POST http://localhost:3001/api/records
+POST http://localhost:3000/api/records
 content-type: application/json
 
 {
-    "fecha": "21/01/2001",
-    
+    "fecha": "2001/01/21",
     "duracion": 100,
     "actividad": "actividad1",
     "descripcion": "descripcion1",
     "responsable": "responsable1"
 }
 ###
-PUT http://localhost:3001/api/records/6493078f22b581ed118472cf
+PUT http://localhost:3000/api/records/6493078f22b581ed118472cf
 content-type: application/json
 
 {
@@ -25,4 +24,13 @@ content-type: application/json
     "actividad": "a13",
     "descripcion": "d13",
     "responsable": "r13"
+}
+###
+POST http://localhost:3000/api/users
+content-type: application/json
+
+{
+    "username": "fgs22002",
+    "name": "Paco Garcia",
+    "password": "fgs"
 }
