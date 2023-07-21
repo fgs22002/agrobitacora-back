@@ -1,11 +1,12 @@
 GET http://localhost:3000/api/records
 ###
-GET http://localhost:3000/api/records/6492e164f6a3e215dc2a9506
+GET http://localhost:3000/api/records/64ba2d24977d9ad262fd5b79
 ###
-DELETE http://localhost:3000/api/records/6492e9846506fa2a45b9245a
+DELETE http://localhost:3000/api/records/64ba3242289ed25cd442f4c7
 ###
 POST http://localhost:3000/api/records
-content-type: application/json
+Content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZnczIyMDAyIiwiaWQiOiI2NGI5MDYwMDljZDMwNjIwMDhkOTAxZjYiLCJpYXQiOjE2ODk5MjY0Mjd9.j3gb587QEFQUiem7UF61qZsA-03yZ9WQUmeEPj99NXA
 
 {
     "fecha": "2001/01/21",
@@ -15,11 +16,11 @@ content-type: application/json
     "responsable": "responsable1"
 }
 ###
-PUT http://localhost:3000/api/records/6493078f22b581ed118472cf
+PUT http://localhost:3000/api/records/64ba2d24977d9ad262fd5b79
 content-type: application/json
 
 {
-    "fecha": "13/03/2013",
+    "fecha": "2013/03/23",
     "duracion": 13,
     "actividad": "a13",
     "descripcion": "d13",
@@ -32,5 +33,15 @@ content-type: application/json
 {
     "username": "fgs22002",
     "name": "Paco Garcia",
+    "password": "fgs"
+}
+###
+GET http://localhost:3000/api/users
+###
+POST http://localhost:3000/api/login
+content-type: application/json
+
+{
+    "username": "fgs22002",
     "password": "fgs"
 }
