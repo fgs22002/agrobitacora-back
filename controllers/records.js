@@ -10,9 +10,21 @@ const getTokenFrom = request => {
   }
   return null
 }
-
+/*
 recordsRouter.get('/', async (request, response) => {
   const records = await Record.find({}).populate('user', { username: 1 })
+  response.json(records)
+})
+*/
+recordsRouter.get('/', async (request, response) => {
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
+
+  const records = await Record.find({ user: user._id }).populate('user', { username: 1 })
   response.json(records)
 })
 
