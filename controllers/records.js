@@ -10,6 +10,17 @@ const getTokenFrom = request => {
   }
   return null
 }
+
+const getAuthorizedUser = async (request) => {
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return null
+    //return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const user = await User.findById(decodedToken.id)
+  return user
+}
 /*
 recordsRouter.get('/', async (request, response) => {
   const records = await Record.find({}).populate('user', { username: 1 })
@@ -17,13 +28,10 @@ recordsRouter.get('/', async (request, response) => {
 })
 */
 recordsRouter.get('/', async (request, response) => {
-  const token = getTokenFrom(request)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
+  const user = await getAuthorizedUser(request)
+  if (!user) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const user = await User.findById(decodedToken.id)
-
   const records = await Record.find({ user: user._id }).populate('user', { username: 1 })
   response.json(records)
 })
@@ -31,14 +39,12 @@ recordsRouter.get('/', async (request, response) => {
 recordsRouter.post('/', async (request, response) => {
   const body = request.body
 
-  const token = getTokenFrom(request)
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
+  const user = await getAuthorizedUser(request)
+  if (!user) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const user = await User.findById(decodedToken.id)
 
-  if (!body.fecha || !body.actividad || !body.descripcion || !body.responsable || !user) {
+  if (!body.fecha || !body.actividad || !body.descripcion || !body.responsable) {
     return response.status(400).json({
       error: 'missing information'
     })
@@ -61,7 +67,11 @@ recordsRouter.post('/', async (request, response) => {
 })
 
 recordsRouter.get('/:id', async (request, response) => {
-  const record = await Record.findById(request.params.id)
+  const user = await getAuthorizedUser(request)
+  if (!user) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+  const record = await Record.findOne({ user: user._id, _id: request.params.id })
   if (record) {
     response.json(record)
   } else {
@@ -71,6 +81,10 @@ recordsRouter.get('/:id', async (request, response) => {
 
 recordsRouter.put('/:id', async (request, response) => {
   const body = request.body
+  const user = await getAuthorizedUser(request)
+  if (!user) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
 
   if (!body.fecha || !body.actividad || !body.descripcion || !body.responsable) {
     return response.status(400).json({
@@ -86,7 +100,7 @@ recordsRouter.put('/:id', async (request, response) => {
     responsable: body.responsable,
   }
 
-  const updatedRecord = await Record.findByIdAndUpdate(request.params.id, record, { new: true }) // De forma predeterminada, el parámetro updatedNote del controlador de eventos recibe el documento original sin las modificaciones. Agregamos el parámetro opcional { new: true }, que hará que nuestro controlador de eventos sea llamado con el nuevo documento modificado en lugar del original.
+  const updatedRecord = await Record.findOneAndUpdate({ user: user._id, _id: request.params.id }, record, { new: true }) // De forma predeterminada, el parámetro updatedNote del controlador de eventos recibe el documento original sin las modificaciones. Agregamos el parámetro opcional { new: true }, que hará que nuestro controlador de eventos sea llamado con el nuevo documento modificado en lugar del original.
   if (updatedRecord) {
     response.json(updatedRecord)
   } else {
@@ -95,7 +109,12 @@ recordsRouter.put('/:id', async (request, response) => {
 })
 
 recordsRouter.delete('/:id', async (request, response) => {
-  await Record.findByIdAndRemove(request.params.id)
+  const user = await getAuthorizedUser(request)
+  if (!user) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  await Record.findOneAndRemove({ user: user._id, _id: request.params.id })
   response.status(204).end()
 })
 
