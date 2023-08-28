@@ -1,7 +1,6 @@
 # fly.toml app configuration file generated for agrobitacora on 2023-07-20T10:32:24+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
 
 app = "agrobitacora"
 primary_region = "mad"
