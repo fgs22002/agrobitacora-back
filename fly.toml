@@ -1,0 +1,15 @@
+# fly.toml app configuration file generated for agrobitacora on 2023-07-20T10:32:24+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "agrobitacora"
+primary_region = "mad"
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
